@@ -1,0 +1,15 @@
+monitors:
+- center:
+    type: com.sw.kafka.offsetmonitor.center.KafkaMonitorCenter
+    brokers: node8:9092,node9:9092,node10:9092
+    exclude:
+      groups: ['console\-consumer.*', '.*_\d{8}']
+      # topics: ['__consumer_offsets']
+  reporters:
+  - type: com.sw.kafka.offsetmonitor.reporter.InfluxDBReporter
+    url: http://node98:8086
+    database: monitors
+    measurement: {logsize: logsize-monitor, offset: offset-monitor}
+    #        username:
+    #        password:
+    refresh: 5s
